@@ -1,4 +1,5 @@
 
+
 import javax.swing.JOptionPane;
 
 /*
@@ -38,10 +39,15 @@ public class ComprobacionNumerica extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        lbloperaciones.setBackground(new java.awt.Color(102, 255, 204));
+        lbloperaciones.setForeground(new java.awt.Color(0, 153, 255));
         lbloperaciones.setText("Operaciones Numericas ");
 
+        lblnumero.setForeground(new java.awt.Color(0, 204, 204));
         lblnumero.setText("Ingresar numero: ");
 
+        btncomprobar.setBackground(new java.awt.Color(255, 204, 204));
+        btncomprobar.setForeground(new java.awt.Color(102, 0, 102));
         btncomprobar.setText("comprobar");
         btncomprobar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,66 +92,84 @@ public class ComprobacionNumerica extends javax.swing.JFrame {
 
     private void btncomprobarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncomprobarActionPerformed
         // TODO add your handling code here:
-        
-        
-          int numero = Integer.parseInt(txtnumero.getText());
+       
+      
+   // Obtener el número desde el campo de texto
+        int numero = Integer.parseInt(txtnumero.getText());
           
-          int resultado = 0;
+        // Inicializar la variable resultado
+        int resultado = 0;
 
+        // Calcular la suma de los divisores del número
+        for (int i = 1; i < numero; i++) {
+            if (numero % i == 0) {
+                resultado += i;
+            }
+        }
 
-         for (int i = 1; i < numero; i++) {
-    
-         if (numero % i == 0) {
-        
-        resultado += i;
-              }
-                }
-
+        // Verificar si el número es perfecto
         if (resultado == numero) {
-    
-         JOptionPane.showMessageDialog(rootPane, "EL NUMERO ES PERFECTO: " + resultado);
-     
-         } else {
-    
-         JOptionPane.showMessageDialog(rootPane, "EL NUMERO NO ES PERFECTO: " + resultado);
-         
-     }
-        
-        
-    if (esprimo(numero)) {
-            JOptionPane.showMessageDialog(rootPane, "EL NUMERO ES PRIMO");
+            JOptionPane.showMessageDialog(rootPane, "EL NÚMERO ES PERFECTO: " + resultado);
         } else {
-            JOptionPane.showMessageDialog(rootPane, "EL NUMERO NO ES PRIMO");
+            JOptionPane.showMessageDialog(rootPane, "EL NÚMERO NO ES PERFECTO: " + resultado);
+        }
+
+        // Verificar si el número es primo usando la función Primo
+        if (espri(numero)) {
+            JOptionPane.showMessageDialog(rootPane, "EL NÚMERO ES PRIMO");
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "EL NÚMERO NO ES PRIMO");
+        }
+        
+        
+        if(espri(numero)){
+        // Calcular la suma de los números primos y encontrar la raíz cuadrada
+        int sumpri = sumarprimos(numero);
+        //Math.sqrt es una función que se utiliza para calcular la raíz cuadrada de un número
+        double raizprimos = Math.sqrt(sumpri);
+
+        // Mostrar el resultado de la suma de los números primos y su raíz cuadrada
+        JOptionPane.showMessageDialog(rootPane, "LA SUMA DE LOS NUMEROS PRIMIMOS MENORES A  " + numero +
+                " ES: " + sumpri + "\nLA RAIZ DE LA SUMA DE TODOS LOS NUMEROS PRIMOS SON: " + raizprimos);
+             }else {
+            // Mostrar mensaje si el número no es primo
+            JOptionPane.showMessageDialog(rootPane, "EL NUMERO INGRESADO NO ES PRIMO 😀 ingrese un numero primo:");
         }
     }
 
-    static boolean esprimo(int num) {
-        
+    // Función para verificar si un número es primo
+    //El uso de static  significa que el método se puede invocar sin crear una instancia de la clase.
+    static boolean espri(int num) {
         // El 0, 1 y 4 no son primos
-        
         if (num == 0 || num == 1 || num == 4) {
-            
             return false;
         }
-        for (int x = 2; x < num/2; x ++) {
-            
-             // Si es divisible por cualquiera de estos números, no
-            // es primo
-            
-            if (num % x == 0) {
-                
+
+        // Iterar hasta la mitad del número
+        for (int n = 2; n <= num / 2; n++) {
+            // Si es divisible por algún número, no es primo
+            if (num % n == 0) {
                 return false;
-                
             }
         }
-          // Si no se pudo dividir por ninguno de los de arriba, sí es primo
+
+        // Si no se pudo dividir por ninguno de los anteriores, sí es primo
         return true;
-   
-    
+    }
   
-          
-          
+    // Función para calcular la suma de números primos menores que un número dado
+    static int sumarprimos(int num) {
+        int suma = 0;
+        // realizar una accion  través de los números y agregarlos a la suma si son primos
+        for (int i = 2; i < num; i++) {
+            if (espri(i)) {
+                suma += i;
+            }
+        }
+            return suma;
+            
         
+    
     }//GEN-LAST:event_btncomprobarActionPerformed
 
     /**
